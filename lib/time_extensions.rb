@@ -32,5 +32,4 @@ class Numeric
   def ago
     Time.now - self
   end
-
 end
