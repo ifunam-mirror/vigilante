@@ -1,0 +1,24 @@
+<h1>Cámaras</h1>
+
+<table>
+  <tr>
+    <th>Localización</th>
+    <th>Dirección IP</th>
+  </tr>
+
+<% for camera in @cameras %>
+  <tr>
+    <td><%= camera.location %></td>
+    <td><%= camera.ip %></td>
+    
+    <td><%= link_to 'Ver Videos', camera_videos_path(camera) %></td>
+    <td><%= link_to 'Descripción', camera %></td>
+    <!-- <td><%= link_to 'Edit', edit_camera_path(camera) %></td> -->
+    <!-- <td><%= link_to 'Destroy', camera, :confirm => 'Are you sure?', :method => :delete %></td> -->
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Agregar Cámara', new_camera_path %>

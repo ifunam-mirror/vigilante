@@ -1,0 +1,32 @@
+<h1>Editing camera</h1>
+
+<%= error_messages_for :camera %>
+
+<% form_for(@camera) do |f| %>
+  <p>
+    <%= f.label "Dirección IP" %><br />
+    <%= f.text_field :ip %>
+  </p>
+  <p>
+    <%= f.label "Localización" %><br />
+    <%= f.text_field :location %>
+  </p>
+  <p>
+    <%= f.label "Descripción" %><br />
+    <%= f.text_field :description %>
+  </p>
+  <!-- <p>
+    <%= f.label "Usuario" %><br />
+    <%= f.text_field :user %>
+  </p>
+  <p>
+    <%= f.label "Contraseña" %><br />
+    <%= f.text_field :password %>
+  </p> -->
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @camera %> |
+<%= link_to 'Back', cameras_path %>

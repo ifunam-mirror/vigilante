@@ -1,0 +1,24 @@
+<p>
+  <strong>Dirección IP</strong><br />
+  <%= @camera.ip %>
+</p>
+<p>
+  <strong>Localización</strong><br />
+  <%= @camera.location %>
+</p>
+<p>
+  <strong>Descripción</strong><br />
+  <%= @camera.description %>
+</p>
+<!-- <p>
+  <%= "Usuario" %><br />
+  <%= @camera.user %>
+</p>
+<p>
+  <%= "Contraseña" %><br />
+  <%= @camera.password %>
+</p> -->
+
+
+<%= link_to 'Editar', edit_camera_path(@camera) %> |
+<%= link_to 'Regresar a página principal', cameras_path %>

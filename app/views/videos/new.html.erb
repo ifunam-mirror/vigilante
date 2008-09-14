@@ -1,0 +1,32 @@
+<h1>Nuevo Video</h1>
+
+<%= error_messages_for :video %>
+
+<% form_for(@video) do |f| %>
+  <p>
+    <%= f.label "Fecha" %><br />
+    <%= f.text_field :date %>
+  </p>
+  <p>
+    <%= f.label "Hora de inicio" %><br />
+    <%= f.text_field :start %>
+  </p>
+  <p>
+    <%= f.label "Hora de término" %><br />
+    <%= f.text_field :end %>
+  </p>
+  <p>
+    <%= f.label "Duración" %><br />
+    <%= f.text_field :duration %>
+  </p>
+  <p>
+    <%= f.label "Cámara" %><br />
+    <%= collection_select(:video, :camera_id, Camera.find(:all), :id, :location) %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', videos_path %>
