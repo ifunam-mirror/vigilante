@@ -1,15 +1,19 @@
 <h1>Cámaras</h1>
 
 <table>
-  <tr>
+  <tr class="hdr">
     <th>Localización</th>
     <th>Dirección IP</th>
+    <th>Calidad</th>
+	<th></th>
+	<th></th>
   </tr>
 
 <% for camera in @cameras %>
   <tr>
     <td><%= camera.location %></td>
     <td><%= camera.ip %></td>
+	<td><%= camera.quality.name %></td>
     
     <td><%= link_to 'Ver Videos', camera_videos_path(camera) %></td>
     <td><%= link_to 'Descripción', camera %></td>

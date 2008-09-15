@@ -1,15 +1,21 @@
 <h1>Videos</h1>
 
 <table>
-  <tr>
+  <tr class="hdr">
     <th>Fecha</th>
     <th>Hora</th>
+    <th>Duración</th>
+    <th>Localización</th>
+	<th></th>
   </tr>
 
 <% for video in @videos %>
   <tr>
     <td><%= video.date %></td>
-    <td><%= video.start.strftime("%H:%M") %>-<%= video.end.strftime("%H:%M") %></td>
+    <td><%= video.start %>-<%= video.end %></td>
+    <td><%= video.duration %></td>
+    <td><%= video.camera.location %></td>
+
     <td><%= link_to 'View', :action => 'send_movie', :id => video %></td>
     <!-- <td><%= link_to 'Show', video %></td>
     <td><%= link_to 'Edit', edit_video_path(video) %></td>
