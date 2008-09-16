@@ -5,15 +5,15 @@
 <% form_for(@video) do |f| %>
   <p>
     <%= f.label "Fecha" %><br />
-    <%= f.text_field :date %>
+    <%= date_select("video", "date", :order => [:day, :month, :year]) %>
   </p>
   <p>
     <%= f.label "Hora de inicio" %><br />
-    <%= f.text_field :start %>
+    <%= time_select 'video', 'start', {:minute_step => 10} %>
   </p>
   <p>
     <%= f.label "Hora de término" %><br />
-    <%= f.text_field :end %>
+    <%= time_select 'video', 'end', {:minute_step => 10} %>
   </p>
   <p>
     <%= f.label "Duración" %><br />

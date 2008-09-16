@@ -1,4 +1,4 @@
-<h1>Cámara nueva</h1>
+<h1>Cámara ueva</h1>
 
 <%= error_messages_for :camera %>
 
@@ -14,6 +14,18 @@
   <p>
     <%= f.label "Descripción" %><br />
     <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label "Codec" %><br />
+    <%= collection_select(:camera, :codec_id, Codec.find(:all), :id, :name) %>
+  </p>
+  <p>
+    <%= f.label "Calidad" %><br />
+    <%= collection_select(:camera, :quality_id, Quality.find(:all), :id, :name) %>
+  </p>
+  <p>
+    <%= f.label "Agente" %><br />
+    <%= collection_select(:camera, :agent_id, Agent.find(:all), :id, :name) %>
   </p>
   <!-- <p>
     <%= f.label "Usuario" %><br />
