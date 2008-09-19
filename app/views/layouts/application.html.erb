@@ -5,6 +5,8 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>Vigilante: <%= controller.controller_name.capitalize %></title>
+  <%= javascript_include_tag 'prototype' %>
+  <%= calendar_date_select_includes "red" %>
   <%= stylesheet_link_tag 'scaffold' %>
   <%= stylesheet_link_tag 'vigilante' %>
 </head>
