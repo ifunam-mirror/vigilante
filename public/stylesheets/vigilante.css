@@ -1,0 +1,11 @@
+table {
+	border: 1px solid rgb(216,216,216);
+	border-spacing: 0;
+	width: 80%;
+}
+
+table tr.hdr {
+	background-color: rgb(234,234,234);
+	color: rgb(156,156,156);
+	text-align: left;
+}

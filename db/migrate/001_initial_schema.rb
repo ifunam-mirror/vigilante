@@ -32,7 +32,7 @@ class InitialSchema < ActiveRecord::Migration
        t.integer :duration
        t.references :camera
        t.date :date
-       t.time :start, :end
+       t.string :start, :end
      end
 
     # ROLES

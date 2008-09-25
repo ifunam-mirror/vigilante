@@ -1,0 +1,41 @@
+<h1>Videos</h1>
+
+<div id="search">
+<% form_for(:search, :url => {:action => :search}, :method => :get ) do |f| -%>
+    Cámara: <%= collection_select(:search, :camera_id, Camera.find(:all), :id, :location, {:include_blank => "Todas"}) %>
+  <% fields_for :search do |f| %>
+    Desde: <%= f.calendar_date_select :since, :time => true %> Hasta: <%= f.calendar_date_select :until, :time => true %>
+  <% end %>
+  <%= f.submit 'Buscar' %>
+<% end -%>
+</div>
+
+<table>
+  <tr class="hdr">
+    <th>fecha</th>
+    <th>hora</th>
+    <th>duración</th>
+    <th>localización</th>
+	<th></th>
+  </tr>
+
+<% for video in @videos %>
+  <tr>
+    <td><%= video.date %></td>
+    <td><%= video.start %>-<%= video.end %></td>
+    <td><%= video.duration %></td>
+    <td><%= video.camera.location %></td>
+
+    <td><%= link_to 'View', :action => 'send_movie', :id => video %></td>
+    <!-- <td><%= link_to 'Show', video %></td>
+    <td><%= link_to 'Edit', edit_video_path(video) %></td>
+    <td><%= link_to 'Destroy', video, :confirm => 'Are you sure?', :method => :delete %></td> -->
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Regresar a la página principal', cameras_path %>
+
+<!-- <%= link_to 'New video', new_video_path %> -->
