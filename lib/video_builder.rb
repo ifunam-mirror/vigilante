@@ -22,7 +22,7 @@ module Video
     def encode(file="output.avi")
       MEncoder.encode do |mencoder|
         mencoder.input = "mf://#{@frames_dir.file_list(@date, @hour, @length, @frame_type).join(',')}"
-        mencoder.mf.fps = 25
+        mencoder.mf.fps = 2
         mencoder.mf.type = "jpg"
         mencoder.output_video_codec = :lavc
         mencoder.lavc.vcodec = "mpeg4"
@@ -36,6 +36,3 @@ module Video
   end
 end
 
-include Video
-@video_builder = Video::Builder.new("192.168.200.165", "2008/05/28", "18:00")
-@video_builder.encode("../tmp/output.avi")
