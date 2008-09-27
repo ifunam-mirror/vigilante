@@ -13,17 +13,15 @@
 <table>
   <tr class="hdr">
     <th>fecha</th>
-    <th>hora</th>
     <th>duración</th>
     <th>localización</th>
-	<th></th>
+    <th></th>
   </tr>
 
 <% for video in @videos %>
   <tr>
-    <td><%= video.date %></td>
     <td><%= video.start %>-<%= video.end %></td>
-    <td><%= video.duration %></td>
+    <td><%= "#{video.duration} minutos" %></td>
     <td><%= video.camera.location %></td>
 
     <td><%= link_to 'View', :action => 'send_movie', :id => video %></td>

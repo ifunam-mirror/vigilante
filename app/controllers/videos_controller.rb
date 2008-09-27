@@ -99,7 +99,7 @@ class VideosController < ApplicationController
   
   def send_movie
     video = Video.find(params[:id])
-    send_file "#{RAILS_ROOT}/public/videos/#{video.start.strftime('%H:%M')}.avi"
+    send_file video.path, :type => 'video/x-msvideo', :disposition => 'inline' 
   end
   
 end

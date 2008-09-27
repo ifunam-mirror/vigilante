@@ -2,12 +2,12 @@ require 'rubygems'
 require 'rtranscoder/mencoder'
 require 'video_frame_dir'
 
-module Video
+module VideoTools
   class Builder
     include RTranscoder
 
     # FRAMES_PATH = RAILS_ROOT + '/tmp'
-    FRAMES_PATH = '/Users/alex/Projects/rails/vigilante/tmp'
+    FRAMES_PATH = '/var/ftp/var/camera'
 
     def initialize(dir, date, hour, length=10.minutes, frame_type="jpg")
       @frames_dir = VideoFrameDir.new(File.join(FRAMES_PATH,dir))
