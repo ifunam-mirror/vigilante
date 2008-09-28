@@ -27,6 +27,10 @@
     <%= f.label "Agente" %><br />
     <%= collection_select(:camera, :agent_id, Agent.find(:all), :id, :name) %>
   </p>
+  <p>
+    <%= f.label "Duración de videos" %><br />
+    <%= collection_select(:camera, :agent_id, Agent.find(:all), :id, :name) %>
+  </p>  
   <!-- <p>
     <%= f.label "Usuario" %><br />
     <%= f.text_field :user %>
