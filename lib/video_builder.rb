@@ -1,23 +1,20 @@
 require 'rubygems'
 require 'rtranscoder/mencoder'
-require 'video_frame_dir'
+require File.expand_path(File.dirname(__FILE__) + "/../lib/video_frame_dir")
 
 module VideoTools
   class Builder
     include RTranscoder
 
-    # FRAMES_PATH = RAILS_ROOT + '/tmp'
-    FRAMES_PATH = '/var/ftp/var/camera'
-
-    def initialize(dir, date, hour, length=10.minutes, frame_type="jpg")
-      @frames_dir = VideoFrameDir.new(File.join(FRAMES_PATH,dir))
+    def initialize(frames_path, dir, date, hour, length=10.minutes, frame_type="jpg")
+      @frames_dir = VideoFrameDir.new(File.join(frames_path,dir))
       @date = date
       @hour = hour
       @length = length
       @frame_type = frame_type
     end
 
-    # mencoder mf://frame001.jpg,frame002.jpg -mf w=800:h=600:fps=25:type=jpg
+    # mencoder mf://frame001.jpg,frame002.jpg -mf w=800:h=600:fps=2:type=jpg
     # -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -oac copy -o output.avi
     def encode(file="output.avi")
       MEncoder.encode do |mencoder|

@@ -1,4 +1,4 @@
-require 'time_extensions'
+require File.expand_path(File.dirname(__FILE__) + "/../lib/time_extensions")
 
 class VideoFrameDir
   attr_reader :dirs

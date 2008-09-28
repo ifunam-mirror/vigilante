@@ -1,0 +1,3 @@
+config:
+  videos_path: /path/to/the/videos/root/dir
+  images_path: /path/to/the/images/root/dir

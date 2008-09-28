@@ -1,24 +1,38 @@
-ENV['RAILS_ENV'] ||= 'development'
-#require '../config/environment.rb'
-require '/home/juanger/vigilante/lib/video_builder'
+require File.expand_path(File.dirname(__FILE__) + "/../lib/video_builder")
+require 'yaml'
 include VideoTools
 
-# Run this with each camera
-# Use fork too
-n = 10
-puts Time.now.to_s
-Camera.all.each do |camera|
-  puts "#{camera.ip}"
-  time = n.minutes.ago
-  @video_builder = VideoTools::Builder.new(camera.ip, time.strftime("%Y/%m/%d"), "#{time.hour}:#{time.sec}")
-  #video_output_path = "/var/video/#{camera.ip}/#{Date.today.strftime("%Y/%m/%d")}/#{time.hour}"
-  video_output_path = "/var/video/#{camera.ip}"
+module VideoRecorder
+  def self.read_config
+    config = YAML.load_file(File.expand_path(File.dirname(__FILE__) + "/video_config.yml"))
+    config["config"].each { |key, value| class_variable_set("@@#{key}", value) }
+  end
   
-  start_time = time.strftime("%Y-%m-%d-%H:%M")
-  end_time = (time + n.minutes).strftime("%Y-%m-%d-%H:%M")
-  filename = "#{start_time}_#{end_time}.avi"
-  fork { @video_builder.encode(video_output_path + "/#{filename}") }# the forking video :)
-  camera.videos << Video.new(:filename => filename, :path => video_output_path + "/#{filename}", :duration => n,  :start =>  time, :end => time + n.minutes )
+  def self.record(ip,start_time=Time.now)
+    self.read_config
+    camera = Camera.find_by_ip(ip)
+    n = camera.duration
+    
+    video_builder = VideoTools::Builder.new(@@images_path, camera.ip, start_time.strftime("%Y/%m/%d"), "#{time.hour}:#{time.sec}", n)
+    video_output_path = File.join(@@videos_path,camera.ip,start_time.strftime("%Y/%m/%d/%H"))
+    
+    begin
+      File.stat video_output_path
+    rescue
+      FileUtils.mkdir_p video_output_path
+    end
+
+    filename = "#{time.hour}:#{time.sec}.avi"
+    fork { @video_builder.encode(video_output_path + "/#{filename}") }# the forking video :)
+    camera.videos << Video.new(:filename => filename,
+                               :path => File.join(video_output_path, filename),
+                               :duration => n,
+                               :start =>  start_time,
+                               :end =>  n.minutes.since start_time)
+  end
+  
 end
 
-p Process.waitall
+# This will be called by cron with something like:
+# */#{camera.duration} * * * * username /usr/bin/env ruby /vigilante/path/script/runner /vigilante/path/tools/video_recorder #{camera.ip}
+VideoRecorder.record(ARGV[0])
