@@ -15,6 +15,22 @@
     <%= f.label "Descripción" %><br />
     <%= f.text_field :description %>
   </p>
+  <p>
+    <%= f.label "Codec" %><br />
+    <%= collection_select(:camera, :codec_id, Codec.find(:all), :id, :name) %>
+  </p>
+  <p>
+    <%= f.label "Calidad" %><br />
+    <%= collection_select(:camera, :quality_id, Quality.find(:all), :id, :name) %>
+  </p>
+  <p>
+    <%= f.label "Agente" %><br />
+    <%= collection_select(:camera, :agent_id, Agent.find(:all), :id, :name) %>
+  </p>
+  <p>
+    <%= f.label "Duración de videos en minutos" %><br />
+    <%= collection_select(:camera, :video_duration, [5,10,20], :to_i, :to_s) %>
+  </p>
   <!-- <p>
     <%= f.label "Usuario" %><br />
     <%= f.text_field :user %>

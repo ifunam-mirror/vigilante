@@ -10,6 +10,22 @@
   <strong>Descripción</strong><br />
   <%= @camera.description %>
 </p>
+<p>
+  <strong>Codec</strong><br />
+  <%= @camera.codec.name %>
+</p>
+<p>
+  <strong>Calidad</strong><br />
+  <%= @camera.quality.name %>
+</p>
+<p>
+  <strong>Agente</strong><br />
+  <%= @camera.agent.name %>
+</p>
+<p>
+  <strong>Duración de videos</strong><br />
+  <%= @camera.video_duration %> minutos
+</p>
 <!-- <p>
   <%= "Usuario" %><br />
   <%= @camera.user %>

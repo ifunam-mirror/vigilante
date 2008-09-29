@@ -28,8 +28,8 @@
     <%= collection_select(:camera, :agent_id, Agent.find(:all), :id, :name) %>
   </p>
   <p>
-    <%= f.label "Duración de videos" %><br />
-    <%= collection_select(:camera, :agent_id, Agent.find(:all), :id, :name) %>
+    <%= f.label "Duración de videos en minutos" %><br />
+    <%= collection_select(:camera, :video_duration, [5,10,20], :to_i, :to_s) %>
   </p>  
   <!-- <p>
     <%= f.label "Usuario" %><br />

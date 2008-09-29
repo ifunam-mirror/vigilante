@@ -11,4 +11,9 @@ class Video < ActiveRecord::Base
              # :order => 'people.lastname1 ASC, people.lastname2 ASC, people.firstname ASC',
              :page => page, :per_page => per_page)
   end
+  
+  def duration
+    d = (self.end - self.start)/60
+    d.to_i
+  end
 end
