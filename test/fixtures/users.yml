@@ -1,0 +1,16 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+admin:
+  login: admin
+  password: 0191d608052c71f80e80f0cf5178b4c8eed78e7e249219f487ce15c0f2520ab3
+  salt: 6edcc3797db
+  email: juanger@gmail.com 
+  is_admin: true
+  status: true
+
+john:
+  login: john
+  password: 0191d608052c71f80e80f0cf5178b4c8eed78e7e249219f487ce15c0f2520ab3
+  salt: 6edcc3797db
+  email: alexjr85@hotmail.com
+  is_admin: false
+  status: true

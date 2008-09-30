@@ -48,7 +48,6 @@ module ActiveRecord
         options = args.extract_options!
         polymorphic = options.delete(:polymorphic)
         args.each do |col|
-          puts "HELLO"
           table = options[:class_name] ? Inflector.tableize(options[:class_name]) : Inflector.tableize(col)
           foreign_key = options[:foreign_key] ? options[:foreign_key] : "#{col}_id"
           @reference_keys[table] = foreign_key

@@ -43,7 +43,8 @@ class InitialSchema < ActiveRecord::Migration
 
     # USERS
     create_table :users, :force => true do |t|
-      t.string :login, :password, :salt, :status 
+      t.string :login, :password, :email, :salt
+      t.boolean :status, :is_admin, :default => false
       t.references :role
     end
     
