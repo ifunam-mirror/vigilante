@@ -1,4 +1,4 @@
-# require 'cronedit'
+require 'cronedit'
 
 class Camera < ActiveRecord::Base
   has_many :videos
@@ -7,15 +7,15 @@ class Camera < ActiveRecord::Base
   belongs_to :agent
   
   # Callbacks
-  #after_save :edit_crontab
+  after_save :edit_crontab
   
   # this will edit the crontab to add or edit a task
   def edit_crontab
-    ct = CronEdit::Crontab.new 'root'
+    ct = CronEdit::Crontab.new 
     # cameras don't have a duration for their videos now    
-    ct.add this.ip, {:minute => "*/#{this.duration}",
+    ct.add self.ip, {:minute => "*/#{self.video_duration}",
                      :command => "/usr/bin/env ruby #{RAILS_ROOT}/script/runner " +
-                                "#{RAILS_ROOT}/tools/video_recorder #{this.ip}" }
+                                "#{RAILS_ROOT}/tools/video_recorder #{self.ip}" }
     ct.commit
   end
 end
