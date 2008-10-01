@@ -1,5 +1,8 @@
 <%= error_messages_for :user %>
-<div class="title"> Inicio de sesión </div>
+
+<div class="header_box"></div>	
+<div class="login_box">
+
 <% form_for :user, :url => { :action => "login" } do |f| %>
   <p>
     <b>Usuario:</b> <%= f.text_field :login, :size => 12 %>
@@ -13,3 +16,5 @@
     <%= f.submit "Entrar" %>
   </p>
 <% end %>
+</div>
+<div class="footer_box"></div>

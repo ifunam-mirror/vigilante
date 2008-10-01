@@ -1,3 +1,56 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+div.header {
+	background: transparent url("/images/header.jpg");
+	height:	164px;
+	width: 1024px;
+}
+
+div.content {
+	background: transparent url("/images/body_bg.jpg");
+	min-height:	400px;
+	width: 1024px;
+}
+
+div.footer {
+	background: transparent url("/images/footer.jpg");
+	height:	87px;
+	width: 1024px;
+}
+
+div.login_box {
+	font: 14px "Arial" bold;
+	color: #66666; 
+	margin-left: 200px;
+	margin-top: 100px;
+	padding-top: 10px;
+	padding-left: 10px;
+	position: fixed;
+	background: transparent url("/images/bg_box.png") repeat-y;
+	width: 344px;
+	height: 150px;
+}
+div.header_box {
+	background: transparent url("/images/head_box.jpg");
+	width: 344px;
+	height: 11px;
+	position: fixed;
+	margin-left: 200px;
+	margin-top: 89px;
+}
+
+div.footer_box {
+	background: transparent url("/images/footer_box.jpg") no-repeat -2px;
+	width: 344px;
+	height: 16px;
+	position: fixed;
+	margin-left: 200px;
+	margin-top: 250px;
+}
+
 table {
 	border: 1px solid rgb(216,216,216);
 	border-spacing: 0;
