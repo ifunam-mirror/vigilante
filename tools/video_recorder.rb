@@ -26,6 +26,8 @@ module VideoRecorder
     end
 
     @@video_builder.encode(File.join(video_output_path, "/#{time}.avi"))
+    @@video_builder.get_thumbnail(File.join(video_output_path, "/#{time}.avi"))
+    
     camera.videos << Video.new(:filename => time,
                                :path => File.join(video_output_path, "#{time}.avi"),
                                :start =>  start_time,
@@ -45,4 +47,5 @@ end
 # This will be called by cron with something like:
 # */#{camera.duration} * * * * username /usr/bin/env ruby /vigilante/path/script/runner /vigilante/path/tools/video_recorder #{camera.ip}
 puts Time.now.to_s
-VideoRecorder.record(ARGV[0])
+
+VideoRecorder.record(ARGV[0], ARGV[1] || Time.now)

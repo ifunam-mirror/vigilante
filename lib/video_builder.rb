@@ -30,7 +30,6 @@ module VideoTools
         mencoder.output_audio_codec = 'copy'
         mencoder.output = file
       end
-      get_thumbnail(file)
     end
     
     # ffmpeg -i video -t 0.001 -ss 0 -vframes 1 -f mjpeg -s 320x240 thumbnail.jpg
