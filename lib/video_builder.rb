@@ -6,7 +6,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/video_frame_dir")
 module VideoTools
   class Builder
     include RTranscoder
-
+    
     def initialize(frames_path, dir, date, hour, length=10.minutes, frame_type="jpg")
       @frames_dir = VideoFrameDir.new(File.join(frames_path,dir))
       @date = date
@@ -44,7 +44,7 @@ module VideoTools
           ffmpeg.output_format = 'mjpeg'
           ffmpeg.video_frame_size = '320x240'
           ffmpeg.output = File.join(File.dirname(input),File.basename(input,File.extname(input)) + ".jpg")
-        end
+      end
     end
 
   end

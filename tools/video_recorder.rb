@@ -6,10 +6,14 @@ include VideoTools
 
 module VideoRecorder
 
-  def self.record(ip,start_time=Time.now)
+  def self.record(ip,end_time=Time.now)
     self.read_config
     camera = Camera.find_by_ip(ip)
     n = camera.video_duration
+    
+    end_time = Time.parse(end_time) if end_time.is_a? String
+    
+    start_time = end_time - n.minutes
     puts time = start_time.strftime("%H:%M")
     
     @@video_builder = VideoTools::Builder.new(@@images_path, camera.ip,
@@ -25,8 +29,8 @@ module VideoRecorder
       FileUtils.mkdir_p video_output_path
     end
 
-    @@video_builder.encode(File.join(video_output_path, "/#{time}.avi"))
-    @@video_builder.get_thumbnail(File.join(video_output_path, "/#{time}.avi"))
+    @@video_builder.encode(File.join(video_output_path, "#{time}.avi"))
+    @@video_builder.get_thumbnail(File.join(video_output_path, "#{time}.avi"))
     
     camera.videos << Video.new(:filename => time,
                                :path => File.join(video_output_path, "#{time}.avi"),
@@ -48,4 +52,4 @@ end
 # */#{camera.duration} * * * * username /usr/bin/env ruby /vigilante/path/script/runner /vigilante/path/tools/video_recorder #{camera.ip}
 puts Time.now.to_s
 
-VideoRecorder.record(ARGV[0], ARGV[1] || Time.now)
+VideoRecorder.record(ARGV[0])
