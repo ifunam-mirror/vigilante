@@ -10,7 +10,7 @@ module VideoRecorder
     self.read_config
     camera = Camera.find_by_ip(ip)
     n = camera.video_duration
-    time = start_time.strftime("%H:%S")
+    puts time = start_time.strftime("%H:%M")
     
     @@video_builder = VideoTools::Builder.new(@@images_path, camera.ip,
                                     start_time.strftime("%Y/%m/%d"),
