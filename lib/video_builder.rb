@@ -36,13 +36,14 @@ module VideoTools
     def get_thumbnail(input)
       puts "getting thumbnail of #{input}"
       out = File.join(File.dirname(input),File.basename(input,File.extname(input)) + "-%d.jpg")
-      RTranscoder.thumbnail(:video => input,
-                            :start => '00:00:00',
-                            :length => '00:00:01',
-                            :frames => 1,
-                            :width => 320,
-                            :height => 240,
-                            :image => out)
+      FFmpeg.encode do |ff| 
+        ff.input = input
+        ff.record_start_time = 0
+        ff.record_for = 0.001
+        ff.video_frames = 1
+        ff.video_frame_size = '200x150'
+        ff.output = out
+      end
     end
 
   end
