@@ -102,4 +102,10 @@ class VideosController < ApplicationController
     send_file video.path, :type => 'video/x-msvideo', :disposition => 'inline' 
   end
   
+  def generate_image
+    video = Video.find(params[:id])
+    send_data( video.thumbnail, :type => 'image/jpg', :dispostion => 'inline',
+      :filename => "#{video.filename}.jpg" )
+  end
+  
 end
