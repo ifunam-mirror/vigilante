@@ -30,6 +30,7 @@ module VideoRecorder
     end
 
     @@video_builder.encode(File.join(video_output_path, "#{time}.avi"))
+    sleep 60
     @@video_builder.get_thumbnail(File.join(video_output_path, "#{time}.avi"))
     
     camera.videos << Video.new(:filename => time,
