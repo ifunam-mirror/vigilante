@@ -14,7 +14,7 @@ class Camera < ActiveRecord::Base
     ct = CronEdit::Crontab.new 
     # cameras don't have a duration for their videos now    
     ct.add self.ip, {:minute => "*/#{self.video_duration}",
-                     :command => "#{RAILS_ROOT}/tools/video_recorder #{self.ip}" }
+                     :command => "#{RAILS_ROOT}/tools/video_recorder.rb #{self.ip}" }
     ct.commit
   end
 end
