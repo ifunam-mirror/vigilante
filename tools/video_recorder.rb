@@ -26,7 +26,7 @@ module VideoRecorder
     end
 
     @@video_builder.encode(File.join(video_output_path, "/#{time}.avi"))
-    camera.videos << Video.new(:filename => filename,
+    camera.videos << Video.new(:filename => time,
                                :path => File.join(video_output_path, "#{time}.avi"),
                                :start =>  start_time,
                                :end =>  n.minutes.since(start_time),
