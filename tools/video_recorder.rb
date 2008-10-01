@@ -10,11 +10,12 @@ module VideoRecorder
     self.read_config
     camera = Camera.find_by_ip(ip)
     n = camera.video_duration
+    time = start_time.strftime("%H:%S")
     
     @@video_builder = VideoTools::Builder.new(@@images_path, camera.ip,
                                     start_time.strftime("%Y/%m/%d"),
-                                    "#{start_time.hour}:#{start_time.sec}",
-                                    n)
+                                    time,
+                                    n.minutes)
                                     
     video_output_path = File.join(@@videos_path,camera.ip,start_time.strftime("%Y/%m/%d/%H"))
     
@@ -24,13 +25,12 @@ module VideoRecorder
       FileUtils.mkdir_p video_output_path
     end
 
-    filename = "#{start_time.hour}:#{start_time.sec}"
-    fork { @@video_builder.encode(File.join(video_output_path, "/#{filename}.avi")) }# the forking video :)
+    @@video_builder.encode(File.join(video_output_path, "/#{time}.avi"))
     camera.videos << Video.new(:filename => filename,
-                               :path => File.join(video_output_path, "#{filename}.avi"),
+                               :path => File.join(video_output_path, "#{time}.avi"),
                                :start =>  start_time,
                                :end =>  n.minutes.since(start_time),
-                               :thumbnail =>  File.join(video_output_path, "#{filename}.jpg"))
+                               :thumbnail =>  File.join(video_output_path, "#{time}.jpg"))
   end
 
   private

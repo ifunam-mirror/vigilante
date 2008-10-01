@@ -51,6 +51,20 @@ div.footer_box {
 	margin-top: 250px;
 }
 
+label
+{
+width: 4em;
+float: left;
+text-align: right;
+margin-right: 0.5em;
+display: block
+}
+
+.login_box input
+{
+margin-left: 4.5em;
+}
+
 table {
 	border: 1px solid rgb(216,216,216);
 	border-spacing: 0;
