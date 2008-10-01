@@ -14,17 +14,21 @@
 
 <table>
   <tr class="hdr">
-    <th>previsualización</th>
-    <th>fecha</th>
-    <th>duración</th>
-    <th>localización</th>
+    <th>Previsualización</th>
+    <th>Fecha</th>
+    <th>Duración</th>
+    <th>Localización</th>
     <th></th>
   </tr>
 
 <% for video in @videos %>
-  <tr>
-    <td><img class="thumb" src='<%= url_for(:action => 'generate_image', :id => video ) %>' /></td>
-    <td><%= video.start %>-<%= video.end %></td>
+  <tr class="video">
+    <td><img class="thumb" src='<%= url_for(:action => 'generate_image', :id => video) %>'  border="1"/></td>
+    <td style="padding: 10px;">
+        <b>Cámara:</b> <%= video.camera.location %><br/>
+        <b>Fecha y hora de inicio:</b> <%= video.start.strftime("%d/%m/%Y (%I:%M)") %> <br/>
+        <b>Fecha y hora de término:</b> <%= video.end.strftime("%d/%m/%Y (%I:%M)") %>
+    </td>
     <td><%= "#{video.duration} minutos" %></td>
     <td><%= video.camera.location %></td>
 
