@@ -14,7 +14,7 @@ module VideoRecorder
     end_time = Time.parse(end_time) if end_time.is_a? String
     
     start_time = end_time - n.minutes
-    time = start_time.strftime("%H:%M")
+    time = start_time.strftime("%H%M")
     puts "start: #{time}"
     
     @@video_builder = VideoTools::Builder.new(@@images_path, camera.ip,
