@@ -10,7 +10,7 @@ div.header {
 }
 
 div.content {
-	background: transparent url("/images/body_bg.jpg");
+	background: transparent url("/images/body_bg.jpg") no-repeat;
 	min-height:	400px;
 	width: 1024px;
 }
@@ -64,6 +64,12 @@ display: block
 {
 margin-left: 4.5em;
 }
+
+img.thumb {
+  display: block;
+  height: 150px;
+}
+
 
 table {
 	border: 1px solid rgb(216,216,216);
