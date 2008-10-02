@@ -3,7 +3,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resource  :session
 
   map.resources :videos
-  map.resources :cameras
+  
+  map.resources :cameras, :collection => {:statistic => :get}
+  
   map.resources :cameras do |cameras|
     cameras.resources :videos
   end

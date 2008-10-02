@@ -82,4 +82,9 @@ class CamerasController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def statistic
+    
+  end
+  
 end

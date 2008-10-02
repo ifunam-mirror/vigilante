@@ -1,2 +1,3 @@
 id,name,size,compression,fps
-1,"medium","640x480","medium",2
+1,"vga @ 2fps","640x480","medium",2
+2,"svga @ 2fps","800x600","medium",2
