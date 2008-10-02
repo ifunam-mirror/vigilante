@@ -17,9 +17,10 @@ module VideoRecorder
     time = start_time.strftime("%H%M")
     puts "start: #{time}"
     
-    @@video_builder = VideoTools::Builder.new(@@images_path, camera.ip,
+    @@video_builder = VideoTools::Builder.new(@@images_path,
+                                    camera.ip,
                                     start_time.strftime("%Y/%m/%d"),
-                                    time,
+                                    start_time.strftime("%H:%M"),
                                     n.minutes)
                                     
     video_output_path = File.join(@@videos_path,camera.ip,start_time.strftime("%Y/%m/%d/%H"))

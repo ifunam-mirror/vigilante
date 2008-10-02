@@ -58,4 +58,4 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
 end
 
-CalendarDateSelect.format = :iso_date
+CalendarDateSelect.format = :db
