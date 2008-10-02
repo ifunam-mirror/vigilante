@@ -7,14 +7,18 @@ class Camera < ActiveRecord::Base
   belongs_to :agent
   
   # Callbacks
-  after_save :edit_crontab
+  after_save :add_task_to_crontab
   
   # this will edit the crontab to add or edit a task
-  def edit_crontab
+  def add_task_to_crontab
     ct = CronEdit::Crontab.new 
     # cameras don't have a duration for their videos now    
     ct.add self.ip, {:minute => "*/#{self.video_duration}",
                      :command => "#{RAILS_ROOT}/tools/video_recorder.rb #{self.ip}" }
     ct.commit
+  end
+  
+  def remove_task_from_crontab
+    
   end
 end

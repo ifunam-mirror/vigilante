@@ -5,11 +5,11 @@
 
 <% form_for :user, :url => { :action => "login" } do |f| %>
   <p>
-    <b>Usuario:</b> <%= f.text_field :login, :size => 12 %>
+    <label>Usuario:</label> <%= f.text_field :login, :size => 12 %>
   </p>
 
   <p>
-    <b>Contraseña:</b> <%= f.password_field :passwd, :size => 12%>
+    <label>Contraseña:</label> <%= f.password_field :passwd, :size => 12%>
   </p>
 
   <p>
