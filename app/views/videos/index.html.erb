@@ -1,16 +1,8 @@
 <h1>Videos</h1>
 
 <div id="search">
-<% form_for(:search, :url => {:action => :search}, :method => :get ) do |f| -%>
-    Cámara: <%= select(:search, :camera_id, Camera.find(:all).map {|c| [c.location, c.id] },
-                    {:include_blank => "Todas", 
-                     :selected => (params[:camera_id] ? params[:camera_id].to_i : params[:search][:camera_id].to_i) }) %>
-  <% fields_for :search do |f| %>
-    Desde: <%= calendar_date_select_tag :start, session[:query][:start], :time => true, :valid_date_check => "date <= (new Date()).stripTime()", :popup => :force, :id => "search_start", :name => "search[start]" %> 
-    Hasta: <%= calendar_date_select_tag :end, session[:query][:end], :time => true, :valid_date_check => "date <= (new Date()).stripTime()", :popup => :force, :id => "search_end", :name => "search[end]" %>
-  <% end %>
-  <%= f.submit 'Buscar' %>
-<% end -%>
+<%= render :partial => 'filter' %>
+
 </div>
 
 <table>

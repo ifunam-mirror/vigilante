@@ -1,0 +1,23 @@
+<% form_for(:search, :url => {:action => :search}, :method => :get ) do |f| -%>
+  Cámara: <%= select(:search, 
+                       :camera_id, 
+                       Camera.find(:all).map {|c| [c.location, c.id] },
+                       {:include_blank => "Todas", 
+                        :selected => (params[:camera_id] ? params[:camera_id].to_i : session[:query][:camera_id].to_i) }) %>
+  Desde: <%= calendar_date_select_tag :start, 
+                        session[:query] ? session[:query][:start] : "", 
+                        :time => true, 
+                        :valid_date_check => "date <= (new Date()).stripTime()",
+                        :popup => :force, 
+                        :id => "search_start", 
+                        :name => "search[start]" %> 
+                        
+  Hasta: <%= calendar_date_select_tag :end, 
+                        session[:query] ? session[:query][:end] : "", 
+                        :time => true, 
+                        :valid_date_check => "date <= (new Date()).stripTime()", 
+                        :popup => :force, 
+                        :id => "search_end", 
+                        :name => "search[end]" %>
+  <%= f.submit 'Buscar' %>
+<% end -%>
