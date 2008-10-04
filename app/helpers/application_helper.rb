@@ -9,14 +9,21 @@ module ApplicationHelper
     config["config"].each { |key, value| instance_variable_set("@#{key}", value) }
     
     pattern = /[.\d\w]+\s+([.\d\w]+)\s+([.\d\w]+)\s+([.\d\w]+)/
+    usage = {}
     
-    block_usage = IO.popen("df #{@videos_path}").readlines[1].match(pattern)
-    mem_usage = IO.popen("df -h #{@videos_path}").readlines[1].match(pattern)
+    df = IO.popen("df #{@videos_path} #{@images_path}").readlines
+    videos_usage = df[1].match(pattern)
+    images_usage = df[2].match(pattern)
     
+    usage[:videos] = videos_usage[2].to_i
+    usage[:images] = images_usage[2].to_i
+
+    usage[:free] = videos_usage[3].to_i + images_usage[3].to_i
     pc = GoogleChart::PieChart.new('500x200', "", true)
     
-    pc.data "Usado (#{mem_usage[2]})", block_usage[2].to_i, 'ff8800'
-    pc.data "Libre (#{mem_usage[3]})", block_usage[3].to_i, 'dddddd'
+    pc.data "Images", usage[:images], '00ff00'
+    pc.data "Videos", usage[:videos], 'ff8800'
+    pc.data "Libre", usage[:free], 'dddddd'
     pc.to_url
   end
   
