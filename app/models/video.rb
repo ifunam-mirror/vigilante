@@ -27,7 +27,7 @@ class Video < ActiveRecord::Base
              :conditions => conditions,
              :select => 'videos.*',
              :joins => "LEFT JOIN cameras ON videos.camera_id = cameras.id",
-             # :order => 'people.lastname1 ASC, people.lastname2 ASC, people.firstname ASC',
+             :order => 'videos.start ASC',
              :page => page,
              :per_page => per_page)
   end
