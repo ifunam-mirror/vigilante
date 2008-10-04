@@ -8,12 +8,15 @@ module ApplicationHelper
     config = YAML.load_file(File.expand_path(File.dirname(__FILE__) + "../../../tools/video_config.yml"))
     config["config"].each { |key, value| instance_variable_set("@#{key}", value) }
     
-    pc = GoogleChart::PieChart.new('450x200', "Uso de disco", true)
-    vid_usage = IO.popen("du -kd 0 #{@videos_path}").readlines.to_s.match(/([0-9.]+)[\t]/)[1].to_i
-    img_usage = IO.popen("du -kd 0 #{@images_path}").readlines.to_s.match(/([0-9.]+)[\t]/)[1].to_i
-    pc.data "Videos (#{IO.popen("du -hd 0 #{@videos_path}").readlines.to_s.match(/([0-9.]+\w)[\t]/)[1]})", vid_usage
-    pc.data "Imágenes (#{IO.popen("du -hd 0 #{@images_path}").readlines.to_s.match(/([0-9.]+\w)[\t]/)[1]})", img_usage
-    pc.data "Libre", @total_space - (vid_usage + img_usage)
+    pattern = /[.\d\w]+\s+([.\d\w]+)\s+([.\d\w]+)\s+([.\d\w]+)/
+    
+    block_usage = IO.popen("df #{@videos_path}").readlines[1].match(pattern)
+    mem_usage = IO.popen("df -h #{@videos_path}").readlines[1].match(pattern)
+    
+    pc = GoogleChart::PieChart.new('500x200', "", true)
+    
+    pc.data "Usado (#{mem_usage[2]})", block_usage[2].to_i, 'ff8800'
+    pc.data "Libre (#{mem_usage[3]})", block_usage[3].to_i, 'dddddd'
     pc.to_url
   end
   
