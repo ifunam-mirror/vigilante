@@ -1,6 +1,12 @@
 require 'cronedit'
 
 class Camera < ActiveRecord::Base
+  validates_presence_of :ip, :location, :codec_id, :agent_id, :quality_id
+  validates_numericality_of :id, :greater_than => 0, :only_integer => true, :allow_nil => true
+  validates_numericality_of :codec_id, :agent_id, :quality_id, :greater_than => 0, :only_integer => true
+
+  validates_format_of   :ip, :with => /(\d{1,3}\.){3}\d{1,3}/ 
+  
   has_many :videos
   belongs_to :quality
   belongs_to :codec

@@ -20,7 +20,8 @@ class InitialSchema < ActiveRecord::Migration
 
     # CAMERAS
     create_table :cameras, :force => true do |t|
-      t.string :ip, :location, :description
+      t.string :ip, :location, :null => false
+      t.string :description
       t.string :user, :password
       #t.string :strm_path, :strm_user, :strm_password, strm_ip # Maybe another table ??
       t.references :codec, :quality, :agent, :null => false

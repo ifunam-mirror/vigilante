@@ -49,6 +49,17 @@ module Factory
       :course_id => Course.first.id
     }
   end
+  
+  def builder_camera(params)
+    { :ip => '192.168.0.1', 
+      :location => 'El Bathroom', 
+      :description => 'High Survelliance camera', 
+      :codec_id => Codec.first.id,
+      :agent_id => Agent.first.id,
+      :quality_id => Quality.first.id
+    }.merge(params)
+  end
+  
 
 end
 
