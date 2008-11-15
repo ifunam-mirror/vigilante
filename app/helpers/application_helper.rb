@@ -2,7 +2,7 @@
 module ApplicationHelper
   
   require 'yaml'
-  require 'google_chart'
+  # require 'google_chart'
   
   def disk_usage
     config = YAML.load_file(File.expand_path(File.dirname(__FILE__) + "../../../tools/video_config.yml"))
