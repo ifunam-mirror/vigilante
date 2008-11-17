@@ -11,7 +11,7 @@ module ApplicationHelper
     pattern = /[.\d\w]+\s+([.\d\w]+)\s+([.\d\w]+)\s+([.\d\w]+)/
     usage = {}
     
-    df = IO.popen("df #{@videos_path} #{@images_path}").readlines
+    df = IO.popen("df #{@videos_path}").readlines
     videos_usage = df[1].match(pattern)
     images_usage = df[2].match(pattern)
     

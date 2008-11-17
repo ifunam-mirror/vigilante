@@ -8,13 +8,12 @@ module Factory
   
   def build_valid(params = {})
       obj = new(valid_hash(params))
-      obj.save
       obj
   end
     
   def build_valid!(params = {})
     obj = build_valid(params)
-    obj.save!
+    obj.save
     obj
   end
     

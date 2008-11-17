@@ -1,5 +1,12 @@
 class Video < ActiveRecord::Base
+  validates_presence_of :filename, :path, :camera_id
+  validates_numericality_of :id, :greater_than => 0, :only_integer => true, :allow_nil => true
+  validates_numericality_of :camera_id, :greater_than => 0, :only_integer => true
+  # validates_numericality_of :files_size, :greater_than => 0, :only_integer => true
+  
   belongs_to :camera
+  
+  after_save :calculate_md5_and_files_size
   
   def self.search_with_paginate(options, page=1, per_page=10)
     options.keys.each do |k|
@@ -36,4 +43,12 @@ class Video < ActiveRecord::Base
     d = (self.end - self.start)/60
     d.to_i
   end
+  
+  def calculate_md5_and_files_size
+    unless self.path.blank?
+      self.md5 = Digest::MD5.hexdigest(File.read(self.path))
+      self.files_size = File.size(self.path) + File.size(self.thumbnail)
+    end
+  end
+  
 end

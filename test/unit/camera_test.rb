@@ -29,7 +29,9 @@ class CameraTest < ActiveSupport::TestCase
   
   def test_should_remove_task_to_crontab_after_destroy
     initial_size = CronEdit::Crontab.List.size
-    Camera.first.destroy
+    assert_difference "Camera.count", -1 do
+      Camera.first.destroy
+    end
     assert_equal initial_size - 1, CronEdit::Crontab.List.size
   end
 end

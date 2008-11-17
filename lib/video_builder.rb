@@ -46,5 +46,9 @@ module VideoTools
       end
     end
 
+    def erase_source_images
+      FileUtils.rm @frames_dir.file_list(@date, @hour, @length, @frame_type)
+    end
+
   end
 end

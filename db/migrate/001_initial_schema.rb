@@ -31,7 +31,7 @@ class InitialSchema < ActiveRecord::Migration
      create_table :videos, :force => true do |t|
        t.string :filename, :path
        t.integer :duration
-       t.references :camera
+       t.references :camera, :null => false
        t.date :date
        t.string :start, :end
      end

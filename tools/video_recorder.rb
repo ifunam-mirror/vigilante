@@ -25,15 +25,20 @@ module VideoRecorder
                                     
     video_output_path = File.join(@@videos_path,camera.ip,start_time.strftime("%Y/%m/%d/%H"))
     
-    begin
+    begin # Create directory if needed
       File.stat video_output_path
     rescue
       FileUtils.mkdir_p video_output_path
     end
 
+    # Build video and thumbnail
     @@video_builder.encode(File.join(video_output_path, "#{time}.avi"))
     @@video_builder.get_thumbnail(File.join(video_output_path, "#{time}.avi"))
     
+    # Erase images files
+    @@video_builder.erase_source_images
+    
+    # Save video on DB
     camera.videos << Video.new(:filename => time,
                                :path => File.join(video_output_path, "#{time}.avi"),
                                :start =>  start_time,
