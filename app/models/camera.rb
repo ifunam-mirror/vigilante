@@ -18,7 +18,6 @@ class Camera < ActiveRecord::Base
   
   # this will edit the crontab to add or edit a task
   def add_task_to_crontab
-    puts "it is creating the task"
     ct = CronEdit::Crontab.new 
     ct.add self.ip, {:minute => "*/#{self.video_duration}",
                      :command => "#{RAILS_ROOT}/tools/video_recorder.rb #{self.ip}" }

@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.join(File.dirname(__FILE__), '../test_helper')
 class CameraTest < ActiveSupport::TestCase
   fixtures :codecs, :qualities, :agents, :cameras
   
@@ -9,7 +9,6 @@ class CameraTest < ActiveSupport::TestCase
   should_belong_to :quality
   
   should_have_many :videos
-  
   
   def test_should_not_allow_ip_with_bad_format
     @camera = Camera.build_valid(:ip => '000000')
@@ -22,10 +21,15 @@ class CameraTest < ActiveSupport::TestCase
     initial_size = CronEdit::Crontab.List.size
     assert_difference "Camera.count" do 
       @camera = Camera.new(Camera.valid_hash(:ip => '10.10.10.2'))
-      # deny @camera.new_record?, @camera.errors.full_messages.to_sentence
       @camera.save
     end
     assert_equal initial_size + 1, CronEdit::Crontab.List.size
     @camera.destroy
+  end
+  
+  def test_should_remove_task_to_crontab_after_destroy
+    initial_size = CronEdit::Crontab.List.size
+    Camera.first.destroy
+    assert_equal initial_size - 1, CronEdit::Crontab.List.size
   end
 end
