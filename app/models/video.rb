@@ -7,6 +7,7 @@ class Video < ActiveRecord::Base
   belongs_to :camera
   
   after_save :calculate_md5_and_files_size
+  after_destroy :delete_files
   
   def self.search_with_paginate(options, page=1, per_page=10)
     options.keys.each do |k|
@@ -49,6 +50,11 @@ class Video < ActiveRecord::Base
       self.md5 = Digest::MD5.hexdigest(File.read(self.path))
       self.files_size = File.size(self.path) + File.size(self.thumbnail)
     end
+  end
+  
+  def delete_files
+    File.delete(self.path)
+    File.delete(self.thumbnail)
   end
   
 end

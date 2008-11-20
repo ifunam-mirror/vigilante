@@ -22,18 +22,24 @@ module VideoRecorder
                                     start_time.strftime("%Y/%m/%d"),
                                     start_time.strftime("%H:%M"),
                                     n.minutes)
-                                    
-    video_output_path = File.join(@@videos_path,camera.ip,start_time.strftime("%Y/%m/%d/%H"))
-    
-    begin # Create directory if needed
-      File.stat video_output_path
-    rescue
-      FileUtils.mkdir_p video_output_path
-    end
 
     # Build video and thumbnail
-    @@video_builder.encode(File.join(video_output_path, "#{time}.avi"))
-    @@video_builder.get_thumbnail(File.join(video_output_path, "#{time}.avi"))
+    video_temp = File.join(@@video_tmp_path, "#{camera.ip}-#{start_time.strftime("%Y-%m-%d-%H")}.avi")
+    thumb_temp = File.join(@@video_tmp_path, "#{camera.ip}-#{start_time.strftime("%Y-%m-%d-%H")}-1.jpg")
+    @@video_builder.encode(video_path)
+    @@video_builder.get_thumbnail(video_path)
+
+    blocks_needed = File.size(video_temp) + File.size(thumb_temp)
+    blocks_available = `df #{@@videos_path} | awk '{ print $4 }' | tail -1`
+    
+    Video.all(:order => 'start', :limit => 60/n).destroy if blocks_available < blocks_needed
+    
+    video_path = File.join(@@videos_path,camera.ip,start_time.strftime("%Y/%m/%d/%H"))
+
+    FileUtils.mkdir_p video_path unless File.directory? video_path
+
+    File.move video_temp, File.join(video_path, "#{time}.avi")
+    File.move thumb_temp, File.join(video_path, "#{time}.jpg")
     
     # Erase images files
     @@video_builder.erase_source_images
@@ -43,7 +49,7 @@ module VideoRecorder
                                :path => File.join(video_output_path, "#{time}.avi"),
                                :start =>  start_time,
                                :end =>  n.minutes.since(start_time),
-                               :thumbnail =>  File.join(video_output_path, "#{time}-1.jpg"))
+                               :thumbnail =>  File.join(video_output_path, "#{time}.jpg"))
   end
 
   private

@@ -1,3 +1,4 @@
 config:
-  videos_path: /path/to/the/videos/root/dir
+  videos_tmp_path: /path/to/the/temporary/videos/dir
   images_path: /path/to/the/images/root/dir
+  videos_path: /path/to/the/videos/root/dir
