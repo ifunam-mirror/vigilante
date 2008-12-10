@@ -18,6 +18,7 @@ class CameraTest < ActiveSupport::TestCase
   end 
   
   def test_should_add_task_to_crontab_after_save
+    
     initial_size = CronEdit::Crontab.List.size
     assert_difference "Camera.count" do 
       @camera = Camera.new(Camera.valid_hash(:ip => '10.10.10.2'))
