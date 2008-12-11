@@ -1,4 +1,4 @@
-#!/usr/bin/env /home/vigilante/vigilante/script/runner
+#!/usr/bin/env /var/vigilante/script/runner
 
 require File.expand_path(File.dirname(__FILE__) + "/../lib/video_builder")
 require 'yaml'
@@ -8,7 +8,7 @@ module VideoRecorder
 
   def self.record(ip,end_time=Time.now)
     self.read_config
-    camera = Camera.find_by_ip(ip)
+    camera = Camera.find_by_ip(ip.strip)
     n = camera.video_duration
     
     end_time = Time.parse(end_time) if end_time.is_a? String
