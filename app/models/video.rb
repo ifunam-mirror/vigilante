@@ -1,3 +1,5 @@
+require 'digest'
+
 class Video < ActiveRecord::Base
   validates_presence_of :filename, :path, :camera_id
   validates_numericality_of :id, :greater_than => 0, :only_integer => true, :allow_nil => true

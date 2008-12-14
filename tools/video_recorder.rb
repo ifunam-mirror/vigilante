@@ -1,7 +1,8 @@
-#!/usr/bin/env /home/vigilante/vigilante/script/runner
+#!/usr/bin/env /var/vigilante/script/runner
 
 require File.expand_path(File.dirname(__FILE__) + "/../lib/video_builder")
 require 'yaml'
+require 'ftools'
 include VideoTools
 
 module VideoRecorder
@@ -22,15 +23,17 @@ module VideoRecorder
                                     start_time.strftime("%Y/%m/%d"),
                                     start_time.strftime("%H:%M"),
                                     n.minutes)
+    puts "#{n}, #{@@images_path}"
+
 
     # Build video and thumbnail
     video_temp = File.join(@@video_tmp_path, "#{camera.ip}-#{start_time.strftime("%Y-%m-%d-%H")}.avi")
     thumb_temp = File.join(@@video_tmp_path, "#{camera.ip}-#{start_time.strftime("%Y-%m-%d-%H")}-1.jpg")
-    @@video_builder.encode(video_path)
-    @@video_builder.get_thumbnail(video_path)
+    @@video_builder.encode(video_temp)
+    @@video_builder.get_thumbnail(video_temp)
 
     blocks_needed = File.size(video_temp) + File.size(thumb_temp)
-    blocks_available = `df #{@@videos_path} | awk '{ print $4 }' | tail -1`
+    blocks_available = `df #{@@videos_path} | awk '{ print $4 }' | tail -1`.to_i
     
     Video.all(:order => 'start', :limit => 60/n).destroy if blocks_available < blocks_needed
     
@@ -46,10 +49,10 @@ module VideoRecorder
     
     # Save video on DB
     camera.videos << Video.new(:filename => time,
-                               :path => File.join(video_output_path, "#{time}.avi"),
+                               :path => File.join(video_path, "#{time}.avi"),
                                :start =>  start_time,
                                :end =>  n.minutes.since(start_time),
-                               :thumbnail =>  File.join(video_output_path, "#{time}.jpg"))
+                               :thumbnail =>  File.join(video_path, "#{time}.jpg"))
   end
 
   private
