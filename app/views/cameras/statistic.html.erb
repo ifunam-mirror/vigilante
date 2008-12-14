@@ -1,1 +1,18 @@
 <%= image_tag(disk_usage) %>
+
+<% if !Camera.all.blank? %>
+  <table border="1">
+    <tr><th>Camera</th><th>Usage</th><th>Oldest Video Date</th><th>Newest Video Date</th><th>Videos</th></tr>
+    <% for camera in Camera.all %>
+    <tr>
+    <td><%= camera.ip %></td>
+    <td><%= camera.disk_usage %></td>
+    <td><%= camera.oldest_video_date %></td>
+    <td><%= camera.newest_video_date %></td>
+    <td><%= camera.videos.size %></td>
+    </tr> 
+    <% end %>
+  </table>
+<% else %>
+  
+<% end %>

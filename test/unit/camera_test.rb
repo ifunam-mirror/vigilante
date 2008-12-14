@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), '../test_helper')
 class CameraTest < ActiveSupport::TestCase
-  fixtures :codecs, :qualities, :agents, :cameras
+  fixtures :codecs, :qualities, :agents, :cameras, :videos
   
   should_require_attributes :ip, :location, :agent_id, :codec_id, :quality_id
   should_not_allow_nil_value_for :agent_id, :codec_id, :quality_id
@@ -34,5 +34,15 @@ class CameraTest < ActiveSupport::TestCase
       Camera.first.destroy
     end
     assert_equal initial_size - 1, CronEdit::Crontab.List.size
+  end
+  
+  def test_should_know_its_disk_usage
+    Camera.all.each do |camera|
+      if camera.videos.size == 0
+        assert_equal(0, camera.disk_usage)
+      else
+        assert(camera.disk_usage > 0, "Disk usage is not being calculated")
+      end
+    end
   end
 end

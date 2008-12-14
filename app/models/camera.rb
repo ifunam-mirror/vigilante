@@ -5,7 +5,7 @@ class Camera < ActiveRecord::Base
   validates_numericality_of :id, :greater_than => 0, :only_integer => true, :allow_nil => true
   validates_numericality_of :codec_id, :agent_id, :quality_id, :greater_than => 0, :only_integer => true
 
-  validates_format_of   :ip, :with => /(\d{1,3}\.){3}\d{1,3}/ 
+  validates_format_of :ip, :with => /(\d{1,3}\.){3}\d{1,3}/ 
   
   has_many :videos
   belongs_to :quality
@@ -29,4 +29,18 @@ class Camera < ActiveRecord::Base
     ct.remove self.ip
     ct.commit
   end
+  
+  def disk_usage
+    Video.sum('files_size', :conditions => ['camera_id = ?', self.id])
+  end
+  
+  def newest_video_date
+    Video.last(:conditions => ['camera_id = ?', self.id]).start
+  end
+  
+  def oldest_video_date
+    Video.first(:conditions => ['camera_id = ?', self.id]).start
+  end
+  
+  
 end
