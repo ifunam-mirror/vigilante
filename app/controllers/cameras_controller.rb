@@ -1,7 +1,13 @@
 class CamerasController < ApplicationController
+  layout 'cameras_map', :only => 'index'
+  
   # GET /cameras
   # GET /cameras.xml
   def index
+    @map = GMap.new("map_div")
+    @map.control_init(:large_map => true,:map_type => false)
+    @map.center_zoom_init([75.5,-42.56],4)
+    
     @cameras = Camera.find(:all)
 
     respond_to do |format|
