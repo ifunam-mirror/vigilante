@@ -3,6 +3,7 @@ module ApplicationHelper
   
   require 'yaml'
   require 'google_chart'
+  require 'digest'
   
   def disk_usage_chart
     config = YAML.load_file(File.expand_path(File.dirname(__FILE__) + "../../../tools/video_config.yml"))
@@ -11,19 +12,15 @@ module ApplicationHelper
     chart = GoogleChart::PieChart.new(:width => 500, :height => 200, :is_3d => true)
     
     Camera.all.each do |camera|
-      chart.data camera.ip, camera.disk_usage
+      chart.data camera.ip, camera.disk_usage, camera.color
     end
     
-    chart.data "Libre", available_space , 'dddddd' # We need the available space...
+    chart.data "Libre", available_space , 'dddddd'
     chart.to_url
   end
   
   def available_space
-    `df -b #{@videos_path} | awk '{ print $4 }' | tail -1`.to_i
-  end
-
-  def humanize(blocks, block_size = 512)
-    number_to_human_size(blocks*block_size)
+    `df -b #{@videos_path} | awk '{ print $4 }' | tail -1`.to_i * 512
   end
   
 end

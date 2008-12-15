@@ -46,5 +46,8 @@ class Camera < ActiveRecord::Base
     Video.sum('files_size')
   end
   
+  def color
+    return Digest::MD5.hexdigest(self.ip)[0,6]
+  end
   
 end
