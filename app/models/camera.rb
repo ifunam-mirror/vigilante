@@ -42,5 +42,9 @@ class Camera < ActiveRecord::Base
     Video.first(:conditions => ['camera_id = ?', self.id]).start
   end
   
+  def self.disk_usage
+    Video.sum('files_size')
+  end
+  
   
 end

@@ -6,9 +6,9 @@
     <% for camera in Camera.all %>
     <tr>
     <td><%= camera.ip %></td>
-    <td><%= camera.disk_usage %></td>
-    <td><%= camera.oldest_video_date %></td>
-    <td><%= camera.newest_video_date %></td>
+    <td><%= humanize(camera.disk_usage) %></td>
+    <td><%= camera.oldest_video_date.strftime("%Y/%m/%d %H:%M") %></td>
+    <td><%= camera.newest_video_date.strftime("%Y/%m/%d %H:%M") %></td>
     <td><%= camera.videos.size %></td>
     </tr> 
     <% end %>
@@ -16,3 +16,8 @@
 <% else %>
   
 <% end %>
+
+<table>
+  <tr><td>Total:</td><td><%= humanize(Camera.disk_usage) %></td></tr>
+  <tr><td>Libre:</td><td><%= humanize(available_space) %></td></tr>
+</table>

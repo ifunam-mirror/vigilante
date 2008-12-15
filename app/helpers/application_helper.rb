@@ -7,28 +7,23 @@ module ApplicationHelper
   def disk_usage_chart
     config = YAML.load_file(File.expand_path(File.dirname(__FILE__) + "../../../tools/video_config.yml"))
     config["config"].each { |key, value| instance_variable_set("@#{key}", value) }
-    # 
-    # pattern = /[.\d\w]+\s+([.\d\w]+)\s+([.\d\w]+)\s+([.\d\w]+)/
-    # usage = {}
-    # 
-    # df = IO.popen("df #{@videos_path}").readlines
-    # videos_usage = df[1].match(pattern)
-    # images_usage = df[2].match(pattern)
-    # 
-    # usage[:videos] = videos_usage[2].to_i
-    # usage[:images] = images_usage[2].to_i
-    # 
-    # usage[:free] = videos_usage[3].to_i + images_usage[3].to_i
 
-    chart = GoogleChart::PieChart.new('500x300', "", true)
+    chart = GoogleChart::PieChart.new(:width => 500, :height => 200, :is_3d => true)
     
     Camera.all.each do |camera|
       chart.data camera.ip, camera.disk_usage
     end
     
-    #pc.data "Libre", `df #{@videos_path} | awk '{ print $4 }' | tail -1`.to_i , 'dddddd' # We need the available space...
-    pc.to_url
-    
+    chart.data "Libre", available_space , 'dddddd' # We need the available space...
+    chart.to_url
+  end
+  
+  def available_space
+    `df #{@videos_path} | awk '{ print $4 }' | tail -1`.to_i
+  end
+
+  def humanize(blocks, block_size = 512)
+    number_to_human_size(blocks*block_size)
   end
   
 end
