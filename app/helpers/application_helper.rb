@@ -19,7 +19,7 @@ module ApplicationHelper
   end
   
   def available_space
-    `df #{@videos_path} | awk '{ print $4 }' | tail -1`.to_i
+    `df -b #{@videos_path} | awk '{ print $4 }' | tail -1`.to_i
   end
 
   def humanize(blocks, block_size = 512)
