@@ -2,7 +2,15 @@
 
 <%= error_messages_for :camera %>
 
+<%= @map.div(:width => 640, :height => 480) %>
+
 <% form_for(@camera) do |f| %>
+  <p>
+    <%= f.hidden_field :lat %>
+  </p>
+  <p>
+    <%= f.hidden_field :lng %>
+  </p>
   <p>
     <%= f.label "Dirección IP" %><br />
     <%= f.text_field :ip %>

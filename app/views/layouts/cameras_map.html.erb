@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Vigilante: <%= controller.controller_name.capitalize %> map</title>
+  <%= javascript_include_tag 'prototype' %>
+  <%= calendar_date_select_includes "red" %>
+  <%= stylesheet_link_tag 'vigilante' %>
+  <%= GMap.header :host => 'localhost' %>
+  <%= @map.to_html %>
+
+<script>
+  function dragMarker() {
+    document.getElementById("camera_lat").value = this.getLatLng().lat();
+    document.getElementById("camera_lng").value = this.getLatLng().lng();
+  }
+
+  function addMarker(overlay, latlng) {
+      var marker = new GMarker(latlng, {draggable: true});
+      map.addOverlay(marker);
+      document.getElementById("camera_lat").value = latlng.lat();
+      document.getElementById("camera_lng").value = latlng.lng();
+
+      GEvent.addListener(marker, "dragend", dragMarker);
+
+
+      GEvent.removeListener(addMarker_listener)
+  }
+</script>
+
+
+</head>
+<body>
+
+<div class="header"></div>
+
+<div class="content">
+	<div class="notice"><%= flash[:notice] %></div>
+	<%= yield  %>
+</div>
+<div class="footer"></div>
+</body>
+</html>

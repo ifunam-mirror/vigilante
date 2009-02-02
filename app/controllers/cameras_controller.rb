@@ -1,12 +1,14 @@
 class CamerasController < ApplicationController
-  layout 'cameras_map', :only => 'index'
+  layout 'cameras_map', :only => [:index, :edit]
   
   # GET /cameras
   # GET /cameras.xml
   def index
     @map = GMap.new("map_div")
-    @map.control_init(:large_map => true,:map_type => false)
-    @map.center_zoom_init([75.5,-42.56],4)
+    @map.control_init(:large_map => false,:small_zoom => false, :map_type => false)
+    @map.center_zoom_init([19.324600, -99.176432],18)
+    @map.interface_init(:dragging => false, :double_click_zoom => false)
+    @map.set_map_type_init(GMapType::G_HYBRID_MAP)
     
     @cameras = Camera.find(:all)
 
@@ -41,6 +43,21 @@ class CamerasController < ApplicationController
   # GET /cameras/1/edit
   def edit
     @camera = Camera.find(params[:id])
+    
+    @map = GMap.new("map_div")
+    @map.control_init(:large_map => false,:small_zoom => false, :map_type => false)
+    @map.center_zoom_init([19.324600, -99.176432],18)
+    @map.interface_init(:dragging => false, :double_click_zoom => false)
+    @map.set_map_type_init(GMapType::G_HYBRID_MAP)
+    
+    if @camera.lat.nil? || @camera.lat.nil?
+      @map.event_init(@map,:click,"addMarker")
+    else
+      @marker = GMarker.new([@camera.lat.to_f, @camera.lng.to_f], :draggable => true)
+      @map.declare_init(@marker, 'marker')
+      @map.overlay_init(@marker)
+      @map.event_init(@marker, :dragend, "dragMarker")
+    end
   end
 
   # POST /cameras

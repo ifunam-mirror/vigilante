@@ -9,10 +9,12 @@ module VideoRecorder
 
   def self.record(ip,end_time=Time.now)
     self.read_config
-    camera = Camera.find_by_ip(ip)
-    n = camera.video_duration
     
     end_time = Time.parse(end_time) if end_time.is_a? String
+    puts "end: #{end_time}"
+    
+    camera = Camera.find_by_ip(ip)
+    n = camera.video_duration
     
     start_time = end_time - n.minutes
     time = start_time.strftime("%H%M")

@@ -23,4 +23,14 @@ module ApplicationHelper
     `df -b #{@videos_path} | awk '{ print $4 }' | tail -1`.to_i * 512
   end
   
+  def display_markers(map)
+    Camera.all.each do |camera|
+      description = link_to('Edit', edit_camera_path(1))
+      videos = link_to('Videos', camera_videos_path(1))
+      info = "#{camera.location}<br/>IP: #{camera.ip}<br/>"+ 
+             "#{link_to 'Videos', camera_videos_path(camera)}"
+      map.overlay_init(GMarker.new([camera.lat.to_f, camera.lng.to_f], :info_window => info))
+    end
+  end
+  
 end
