@@ -8,7 +8,7 @@
   <%= javascript_include_tag 'prototype' %>
   <%= calendar_date_select_includes "red" %>
   <%= stylesheet_link_tag 'vigilante' %>
-  <%= GMap.header :host => 'localhost' %>
+  <%= GMap.header :host => request.host %>
   <%= @map.to_html %>
 
 <script>
